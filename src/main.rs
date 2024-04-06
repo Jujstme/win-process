@@ -16,7 +16,6 @@ use windows_sys::Win32::{
     },
 };
 
-#[cfg(feature = "alloc")]
 pub mod alloc;
 
 pub mod process_module;
