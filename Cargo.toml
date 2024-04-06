@@ -1,0 +1,30 @@
+[package]
+name = "win-process"
+version = "0.1.0"
+authors = ["Jujstme <just.tribe@gmail.com>"]
+categories = ["no-std"]
+edition = "2021"
+#readme = "README.MD"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+windows-sys = { version = "0.42.0", features = [
+    "Win32_System_Memory",
+    "Win32_System_ProcessStatus",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_Foundation",
+    "Win32_System_Threading",
+] }
+
+[features]
+alloc = []
+
+[profile.max-opt]
+inherits = "release"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[profile.max-opt.build-override]
+opt-level = 0
