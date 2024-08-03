@@ -148,7 +148,7 @@ impl ProcessModule {
 
     fn get_module_info(&self, process: &Process) -> Option<ModuleInfo> {
         let module_info_cached = self.module_info.get();
-        if module_info_cached.is_none() {
+        if module_info_cached.is_some() {
             return module_info_cached;
         }
 
