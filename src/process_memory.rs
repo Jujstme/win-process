@@ -120,9 +120,12 @@ impl Process {
         let buf16 = self.read_into_uninit_buf(address, &mut buf)?;
         let buf8 = unsafe { slice::from_raw_parts(buf16.as_ptr() as *const u8, buf16.len()) };
 
-        let is_utf_16 =
-            buf8.len() > 3 && buf8[0] != 0 && buf8[1] == 0 && buf8[2] != 0 && buf8[3] == 0;
-
+        let is_utf_16 = if let [_, second, _, fourth, ..] = buf8 {
+            matches!(second, &0) && matches!(fourth, &0)
+        } else {
+            false
+        };
+        
         match is_utf_16 {
             true => get_string_utf16(buf16),
             false => get_string_utf8(buf8),
